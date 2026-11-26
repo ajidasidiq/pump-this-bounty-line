@@ -37,6 +37,10 @@ def gate(line: str) -> None:
         )
     if "\n" in line or "\r" in line:
         raise SystemExit("gate failed: entry must be a single line")
+    if any(ord(ch) < 0x20 for ch in line):
+        raise SystemExit("gate failed: entry contains a control character")
+    if line != line.strip():
+        raise SystemExit("gate failed: entry has leading or trailing whitespace")
 
 
 def main() -> int:
